@@ -1,0 +1,87 @@
+name: deploy-toy-website
+
+on: [workflow_dispatch]
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'placeholder step'
+        run: echo "Hello world!"
+
+# Checkout Code
+
+name: MyWorkflow
+
+on: [workflow_dispatch]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        path: repo
+
+# Auth to Azure
+
+name: MyWorkflow
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        path: repo
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+# Deploy to Azure & Create a workload Identity
+name: MyWorkflow
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        path: repo
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - uses: azure/arm-deploy@v1
+      with:
+        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        template: ./deploy/main.bicep
+        parameters: environmentType=Test
+
+# Variables
+
+env:
+    AZURE_RESOURCEGROUP_NAME: gh-actions
+    AZURE_WEBAPP_NAME: webapp-gh-actions
+
+${{ env.AZURE_RESOURCEGROUP_NAME }}
+
+#Secrets
+
+${{ secrets.NAME_OF_THE_SECRET }}
