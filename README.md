@@ -1,5 +1,7 @@
 # LearnLive_GHActions_Demo
 
-Demo repo for Learn Live Content 
+This repo will accompany the Microsoft Learn module: [Deploy Azure resources by using Bicep and GitHub Actions](https://aka.ms/BicepDeployment).
 
-TODO - Write workflows, confirm outline, review deck
+The purpose of this repo is to deploy a website using a Bicep file into Azure using GitHub Actions.
+
+
